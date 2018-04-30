@@ -29,8 +29,6 @@ export class DataAccess {
         requestOptions.headers.append('Authorization', 'Bearer ' + tokenString);
         let body = { "roomId": roomId, "text": messageText };
 
-        console.log('send message ' + roomId + ' ' + messageText);
-
         this._http.post('https://api.ciscospark.com/v1/messages', body, requestOptions).subscribe(
             r => {
                 console.log(r);

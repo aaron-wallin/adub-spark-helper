@@ -43,8 +43,6 @@ export class SectionGigsComponent implements OnInit {
   private loadRoomData() {
     this.loading = true;
 
-    console.log(this.roomTypeSelection);
-
     this._dataaccess.getRooms(this.accessToken, 'all')
       .subscribe(
         r => {
@@ -93,8 +91,6 @@ export class SectionGigsComponent implements OnInit {
   }
 
   public sendMessage(roomId: any, messageText: any): void {
-    console.log('MESSAGE: ' + roomId + ' ' + messageText);
-
     this._dataaccess.sendMessage(this.accessToken, roomId, messageText);
   }
 
@@ -106,14 +102,11 @@ export class SectionGigsComponent implements OnInit {
           let i = this.roomList.filter(r => r.id == roomId)[0];
           i.lastMessage = r.items[0].text;
           i.lastMessageBy = r.items[0].personEmail;
-          console.log(i.lastMessageBy);
         },
         e => console.log(e));
   }
 
   public filterList(event: any) {
-    console.log(event);
-    console.log(this.roomSearch);
     this.sortList();
   }
 
@@ -157,11 +150,7 @@ export class SectionGigsComponent implements OnInit {
                           filter(r => 
                             r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1
                             && new Date(r.lastActivity) >= roomDate);
-    }
-
-    console.log(this.displayRoomList);
-
-    
+    }      
 
     if (this.sortField === 'title') {
 
