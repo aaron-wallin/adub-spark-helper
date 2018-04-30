@@ -1,0 +1,29 @@
+/* Add here all your css styles (customizations) 
+#topcontrol {
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    background: #fff;
+    border: 2px solid #101113;
+    color: #101113;
+    text-align: center;
+    display: inline-block;
+    z-index: 30;
+    width: 36px;
+    height: 36px;
+}
+
+#topcontrol:hover {
+    background: #101113;
+     border: 2px solid #101113;
+     color: #fff;
+}
+
+#topcontrol .fa {
+    position: relative;
+    top: 2px;
+    font-size: 25px;
+    font-weight: bold;
+}
+*/

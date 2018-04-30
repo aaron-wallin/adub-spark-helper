@@ -1,0 +1,92 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "jason-weber-website"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.css"
+      ],
+      "scripts": [ 
+        "./assets/plugins/jquery/jquery.min.js",
+        "./assets/plugins/jquery/jquery-migrate.min.js",
+        "./assets/plugins/bootstrap/js/bootstrap.min.js",
+
+        "./assets/plugins/smoothScroll.js",
+        "./assets/plugins/jquery.easing.min.js",
+        "./assets/plugins/pace/pace.min.js",
+        "./assets/plugins/jquery.parallax.js",
+        "./assets/plugins/counter/waypoints.min.js",
+        "./assets/plugins/counter/jquery.counterup.min.js",
+        "./assets/plugins/owl-carousel2/owl.carousel.min.js",
+        
+        "./assets/plugins/revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js",
+        "./assets/plugins/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js",
+        "./assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js",
+
+        "./assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js",
+        "./assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js",        
+        "./assets/js/plugins/style-switcher-rtl.js",
+
+        "./assets/js/one.app.js",
+        "./assets/js/forms/login.js",
+        "./assets/js/forms/contact.js",
+        "./assets/js/plugins/pace-loader.js",
+        "./assets/js/plugins/owl-carousel-rtl.js",
+        
+        "./assets/js/plugins/revolution-slider.js",
+        "./assets/js/plugins/cube-portfolio/cube-portfolio-lightbox.js",
+
+        "./assets/plugins/jPlayer/jquery.jplayer.min.js",
+        "./assets/plugins/jPlayer/createplaylist.js",
+        "./assets/plugins/jPlayer/add-on/jplayer.playlist.min.js",
+
+        "./assets/js/indexstartup.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

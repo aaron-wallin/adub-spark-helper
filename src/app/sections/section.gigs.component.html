@@ -1,0 +1,122 @@
+<section id="rooms">
+    <div>
+        <div>
+            <div class="container-fluid">
+                <div class="title-v1">
+                    <h1></h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table style="width: 100%">
+                            <tr>
+                                <td>Access Token:</td>
+                                <td>
+                                    <input id="accessToken" [(ngModel)]="accessToken">
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td>Sort Field:</td>
+                                <td>
+                                    <select class="form-control" id="sortField" [(ngModel)]="sortField">
+                                        <option value="title">Title</option>
+                                        <option value="activity">Last Activity</option>
+                                    </select>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td>Room Type:</td>
+                                <td>
+                                    <select class="form-control" id="roomTypeSelection" [(ngModel)]="roomTypeSelection">
+                                        <option value="direct">DIRECT</option>
+                                        <option value="group">GROUP</option>
+                                        <option value="all">ALL</option>
+                                    </select>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td>Room List:</td>
+                                <td>
+                                    <select class="form-control" id="roomListSelection" [(ngModel)]="roomListSelection">
+                                        <option value="all">ALL</option>
+                                        <option value="recent">RECENT</option>
+                                    </select>
+                                </td>
+
+                                <!--
+                                <td *ngIf="loading">
+                                    Loading...
+                                </td>
+                            -->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        <div class="card mb-3">
+                            
+                            <h5 class="card-header">ROOMS</h5>
+
+                            <input id="roomSearch" [(ngModel)]="roomSearch" placeholder="Search..." (keyup)="filterList($event)" />
+
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active show" data-toggle="tab" href="#directtab">DIRECT</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link show" data-toggle="tab" href="#grouptab">GROUP</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade active show" id="directtab" style="padding: 10px;">
+                                    <div *ngFor="let c of roomDirect" id={{c.id}}>
+                                        {{c.title}}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade active show" id="grouptab" style="padding: 10px;">
+                                    <div *ngFor="let c of roomGroups" id={{c.id}}>
+                                        {{c.title}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-10">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>ROOM</th>
+                                    <th>MESSAGE</th>
+                                </tr>
+
+                                <tr *ngFor="let c of displayRoomList" id={{c.id}}>
+                                    <td>
+                                        <span data-toggle="tooltip" title="Last Activity: {{c.lastActivity | date: 'MM/dd/yyyy HH:mm:ss'}}">{{c.title}}</span>
+                                    </td>
+
+                                    <td>
+                                        <div class="form-group">
+
+                                            <div class="input-group">
+                                                <input class="form-control" id="messageToSend" #messageToSend/>
+                                                <button id="sendMessage" (click)="sendMessage(c.id, messageToSend.value)" class="input-group-addon">Send</button>
+                                            </div>
+                                        </div>
+                                        <span style="font-weight:bold;">{{c.lastMessageBy}}</span> : {{c.lastMessage}}
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
