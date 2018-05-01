@@ -9,6 +9,8 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
 import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
 import { switchMap } from 'rxjs/operator/switchMap';
 
+declare var toastr: any;
+
 @Component({
   selector: 'app-gigs',
   templateUrl: './section.gigs.component.html',
@@ -31,12 +33,14 @@ export class SectionGigsComponent implements OnInit {
   public roomListSelection: string = 'recent';
 
   private searchTerms = new Subject<any>();
+  private initialLoad: any = true;
 
   constructor(private _dataaccess: DataAccess) { }
 
   ngOnInit(): void {
 
     this.loading = true;
+    this.configureToastr();
     this.loadRoomData();
   }
 
@@ -61,6 +65,8 @@ export class SectionGigsComponent implements OnInit {
               });
 
               this.getLastMessageForRoom(room.id);
+
+
             }
             else {
 
@@ -77,17 +83,19 @@ export class SectionGigsComponent implements OnInit {
           this.sortList();
           this.loading = false;
 
-          Observable.interval(6000).take(1).subscribe(x => {
+          Observable.interval(3000).take(1).subscribe(x => {
             this.loadRoomData();
           });
 
         },
-        e =>{ 
+        e => {
           console.log(e);
-          Observable.interval(6000).take(1).subscribe(x => {
+          Observable.interval(3000).take(1).subscribe(x => {
             this.loadRoomData();
           });
         });
+
+    this.initialLoad = false;
   }
 
   public sendMessage(roomId: any, messageText: any): void {
@@ -102,6 +110,10 @@ export class SectionGigsComponent implements OnInit {
           let i = this.roomList.filter(r => r.id == roomId)[0];
           i.lastMessage = r.items[0].text;
           i.lastMessageBy = r.items[0].personEmail;
+
+          if (this.initialLoad === false) {
+            toastr.info(i.lastMessageBy + ': ' + i.lastMessage);
+          }
         },
         e => console.log(e));
   }
@@ -114,43 +126,43 @@ export class SectionGigsComponent implements OnInit {
 
     let currentDate = new Date();
     let roomDate = new Date();
-    if(this.roomListSelection === 'recent')   
+    if (this.roomListSelection === 'recent')
       roomDate.setDate(currentDate.getDate() - 7);
     else
       roomDate.setDate(currentDate.getDate() - 730);
 
-    this.roomDirect = this.roomList.filter(r => 
-                        r.type === 'direct' 
-                        && (this.roomSearch === '' || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1)
-                        && new Date(r.lastActivity) >= roomDate);
-    this.roomGroups = this.roomList.filter(r => 
-                        r.type === 'group' 
-                        && (this.roomSearch === '' || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1)
-                        && new Date(r.lastActivity) >= roomDate);    
+    this.roomDirect = this.roomList.filter(r =>
+      r.type === 'direct'
+      && (this.roomSearch === '' || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1)
+      && new Date(r.lastActivity) >= roomDate);
+    this.roomGroups = this.roomList.filter(r =>
+      r.type === 'group'
+      && (this.roomSearch === '' || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1)
+      && new Date(r.lastActivity) >= roomDate);
 
     if (this.roomTypeSelection === 'direct') {
       this.displayRoomList = this.roomList.
-                          filter(r => 
-                            r.type === this.roomTypeSelection 
-                            && new Date(r.lastActivity) >= roomDate
-                            && (this.roomSearch === '' 
-                                || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1));
+        filter(r =>
+          r.type === this.roomTypeSelection
+          && new Date(r.lastActivity) >= roomDate
+          && (this.roomSearch === ''
+            || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1));
     }
 
     if (this.roomTypeSelection === 'group') {
       this.displayRoomList = this.roomList.
-                          filter(r => 
-                            r.type === this.roomTypeSelection 
-                            && new Date(r.lastActivity) >= roomDate
-                            && (this.roomSearch === '' || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1));
+        filter(r =>
+          r.type === this.roomTypeSelection
+          && new Date(r.lastActivity) >= roomDate
+          && (this.roomSearch === '' || r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1));
     }
 
     if (this.roomTypeSelection === 'all') {
       this.displayRoomList = this.roomList.
-                          filter(r => 
-                            r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1
-                            && new Date(r.lastActivity) >= roomDate);
-    }      
+        filter(r =>
+          r.title.toLowerCase().indexOf(this.roomSearch.toLowerCase()) !== -1
+          && new Date(r.lastActivity) >= roomDate);
+    }
 
     if (this.sortField === 'title') {
 
@@ -191,6 +203,34 @@ export class SectionGigsComponent implements OnInit {
         if (l.lastActivity < r.lastActivity) return 1;
         return 0;
       });
+    }
+  }
+
+  public messageTextKeyUp(event: any, roomId: any, messageText: any, item: any) {       
+
+    if(event.code === 'Enter' || event.keyCode === 13) {
+      this.sendMessage(roomId, messageText);
+      
+    }
+  }
+
+  private configureToastr() {
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "500",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
     }
   }
 }

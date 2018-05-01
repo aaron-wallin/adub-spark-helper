@@ -55,7 +55,9 @@
         "./assets/plugins/jPlayer/createplaylist.js",
         "./assets/plugins/jPlayer/add-on/jplayer.playlist.min.js",
 
-        "./assets/js/indexstartup.js"
+        "./assets/js/indexstartup.js",
+
+        "./assets/plugins/toastr/toastr.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
